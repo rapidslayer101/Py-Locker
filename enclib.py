@@ -8,7 +8,7 @@ from hashlib import sha512
 from zlib import compress, decompress
 from multiprocessing import Pool, cpu_count
 
-# enc 11.8.0 - CREATED BY RAPIDSLAYER101 (Scott Bree)
+# enc 11.8.1 - CREATED BY RAPIDSLAYER101 (Scott Bree)
 _default_block_size_ = 5000000  # modifies the chunking size
 _xor_salt_len_ = 8  # 94^8 combinations
 _default_pass_depth_ = 100000

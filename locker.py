@@ -10,12 +10,12 @@ from hashlib import sha512
 # 2. The depth speed will probably be faster if p2k and to_hex are rewritten in another language
 
 # key system
-# 1. master_pass + master_pin (depth a few hours/days) = master_key
+# 1. master_pass + master_pin + master_depth (depth a few hours/days) = master_key
 # 2. master_key + key_file_pin = key_file
 # 3. master_key + unlock_pass + unlock_pin (depth a few seconds) = unlock_key
 
 # to get unlock key
-# enter key_file_pin
+# enter key_file_pin (12 digits)
 # enter unlock_pass
 # enter unlock_pin
 
@@ -72,6 +72,7 @@ def get_key_file_data():
                         except ValueError:
                             pass
                     print("Pin must be 12 digits")
+                print("Unlocking")
                 key_file_data = enc.dec_from_pass(data, key_file_pin[:6], key_file_salt, int(key_file_pin[6:]))
                 return key_file_pin, key_file_salt, key_file_data
             except zlib.error:
@@ -101,7 +102,7 @@ while True:
         except FileNotFoundError:
             make_new_key_file()
 
-print("\nKey file unlock successful")
+print("\nKey file unlocked successfully")
 data = data.split("\n")
 if len(data) > 0:
     dps = int(data[0])
@@ -133,7 +134,8 @@ if len(data) == 1:
         except ValueError:
             pass
         print("Depth must be a number")
-    print(f"Calculated depth: {int(round(master_depth_t*3600*dps, 0))}, IF REGENERATING KEY FILE ENTER OLD DEPTH VALUE")
+    print(f"\nCalculated depth: {int(round(master_depth_t*3600*dps, 0))}\n"
+          f"Enter master depth (master_depth), IF REGENERATING KEY FILE ENTER OLD DEPTH VALUE")
     while True:
         master_depth = input("Set Depth: ")
         try:
